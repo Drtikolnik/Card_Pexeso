@@ -62,23 +62,24 @@ public class HelloController {
     private void handleCardClick ( Card card ) {
         if ( firstCard == null ) {
             firstCard = card ;
-            card.getButton().setText(String.valueOf(card.getId()));
+            card.flip();
         } else {
             secondCard = card ;
-            card.getButton().setText(String.valueOf(card.getId()));
-            checkMatch(firstCard, secondCard) ;
+            card.flip();
+            checkMatch() ;
         }
     }
 
-    public void checkMatch(Card firstCard, Card secondCard) {
-        if(firstCard.equals(secondCard)) {
-            score1++;
-            currentPlayer = 1;
-        }else{
-            currentPlayer = 1;
-            firstCard.flipBack();
+    public void checkMatch() {
+        if((firstCard.getId()) == (secondCard).getId()) {
             firstCard = null;
+            secondCard = null;
+        }else{
+
+            firstCard.flipBack();
             secondCard.flipBack();
+
+            firstCard = null;
             secondCard = null;
 
         }
