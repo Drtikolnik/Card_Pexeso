@@ -111,10 +111,13 @@ public class HelloController {
             if((score1+score2) == 8){
                 if(score1 > score2){
                     winnerPlayer = 1;
-                }else{
+                    labelWinner.setText("Vyhrál hráč 1!");
+                } else if(score2 > score1) {
                     winnerPlayer = 2;
+                    labelWinner.setText("Vyhrál hráč 2!");
+                }else{
+                    labelWinner.setText("Remíza!");
                 }
-                labelWinner.setText("Vyhrál hráč " +winnerPlayer+ "!");
             }else{
                 labelKteryHracHraje.setText("Hraje hráč " +currentPlayer);
             }
