@@ -24,6 +24,13 @@ public class HelloController {
 
     @FXML
     private GridPane gridPane;
+    @FXML
+    private Label labelScore1;
+    @FXML
+    private Label labelScore2;
+    @FXML
+    private Label labelKteryHracHraje;
+
 
 
     private ArrayList<Card> cards = new ArrayList<>();
@@ -32,8 +39,12 @@ public class HelloController {
     private boolean canFlip = true;
 
     private int currentPlayer = 1;
+    private int winnerPlayer = 0;
     private int score1 = 0;
     private int score2 = 0;
+
+
+
 
     @FXML
     public void generateCards() {
@@ -45,10 +56,9 @@ public class HelloController {
 
     @FXML
     public void displayCards() {
-        gridPane.getChildren().clear();
         int index = 0;
 
-        for(int row = 0; row < 4; row++){
+        for(int row = 1; row < 5; row++){
             for(int col = 0; col < 4; col++){
                 Card card = cards.get(index++);
                 Button btn = card.getButton();
@@ -71,25 +81,53 @@ public class HelloController {
     }
 
     public void checkMatch() {
-        if((firstCard.getId()) == (secondCard).getId()) {
-            firstCard = null;
-            secondCard = null;
-        }else{
+        if(firstCard != secondCard) {
+            if((firstCard.getId()) == (secondCard).getId()) {
+                if(currentPlayer == 1) {
+                    score1++;
+                }else{
+                    score2++;
+                }
+                firstCard.getButton().setDisable(true);
+                secondCard.getButton().setDisable(true);
+                firstCard = null;
+                secondCard = null;
+            }else{
+                if(currentPlayer == 1) {
+                    currentPlayer = 2;
+                }else{
+                    currentPlayer = 1;
+                }
+                firstCard.flipBack();
+                secondCard.flipBack();
 
-            firstCard.flipBack();
-            secondCard.flipBack();
+                firstCard = null;
+                secondCard = null;
 
-            firstCard = null;
-            secondCard = null;
+            }
+
+            labelScore1.setText(score1+"");
+            labelScore2.setText(score2+"");
+            if((score1+score2) == 8){
+                if(score1 > score2){
+                    winnerPlayer = 1;
+                }else{
+                    winnerPlayer = 2;
+                }
+                labelWinner.setText("Vyhrál hráč " +winnerPlayer+ "!");
+            }else{
+                labelKteryHracHraje.setText("Hraje hráč " +currentPlayer);
+            }
 
         }
+
 
     }
 
     @FXML
     public void initialize() {
         generateCards();
-        //Collections.shuffle(cards);
+        Collections.shuffle(cards);
         displayCards();
     }
 

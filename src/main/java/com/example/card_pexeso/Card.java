@@ -1,6 +1,10 @@
 package com.example.card_pexeso;
 
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
+
 import javafx.application.Application;
+import javax.swing.Timer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -17,7 +21,7 @@ public class Card {
     public Card(int id) {
         this.id = id;
         this.button = new Button("?");
-        this.button.setMinSize(60,60);
+        this.button.setMinSize(150,150);
     }
 
     public void flip () {
@@ -26,8 +30,18 @@ public class Card {
 
 
     public void flipBack () {
-        button.setText("?") ;
+        // Vytvoříme pauzu na 1 sekundu
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+
+        // Co se má stát, až pauza skončí:
+        pause.setOnFinished(e -> button.setText("?"));
+
+        // Spustíme odpočet
+        pause.play();
     }
+
+
+
 
     public int getId() {
         return id;
