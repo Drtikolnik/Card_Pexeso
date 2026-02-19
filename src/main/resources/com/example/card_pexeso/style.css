@@ -1,0 +1,60 @@
+/* Hlavní pozadí celého okna */
+.root {
+    -fx-background-color: #1a1a2e; /* Temně modrá/černá */
+}
+
+/* Styl pro GridPane (herní plocha) */
+.grid-pane {
+    -fx-padding: 20;
+    -fx-hgap: 15;
+    -fx-vgap: 15;
+    -fx-alignment: center;
+}
+
+/* Styl pro všechny nápisy (Labely) */
+.label {
+    -fx-text-fill: #e94560; /* Výrazná růžovo-červená barva */
+    -fx-font-family: "Segoe UI", Tahoma, Helvetica;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 5, 0, 0, 1);
+}
+
+/* Speciální styl pro skóre (trošku jiná barva) */
+#labelScore1, #labelScore2 {
+    -fx-text-fill: #0f3460;
+    -fx-background-color: #e94560;
+    -fx-background-radius: 5;
+    -fx-padding: 5 15 5 15;
+}
+
+/* Tlačítka - karty */
+.button {
+    -fx-background-color: #16213e;
+    -fx-background-radius: 12;
+    -fx-border-color: #e94560;
+    -fx-border-width: 2;
+    -fx-border-radius: 12;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #0f3460;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/* Tlačítko "Hrát znovu" - aby vypadalo jinak než karty */
+#buttonHratZnovu {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-padding: 10 20;
+    -fx-background-radius: 30;
+    -fx-border-width: 0;
+}
+
+#buttonHratZnovu:hover {
+    -fx-background-color: #2ecc71;
+    -fx-scale-x: 1.1;
+}
