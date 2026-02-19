@@ -16,6 +16,7 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
@@ -38,6 +39,11 @@
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="3">
          <children>
             <Label fx:id="labelWinner" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowIndex="5">
+         <children>
+            <Button fx:id="buttonHratZnovu" disable="true" mnemonicParsing="false" onAction="#hratZnovu" text="HRÁT ZNOVU" visible="false" />
          </children>
       </HBox>
    </children>

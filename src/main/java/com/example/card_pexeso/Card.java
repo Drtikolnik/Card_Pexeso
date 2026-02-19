@@ -10,22 +10,38 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 import javafx.scene.control.Button;
+
+import java.awt.*;
 
 
 public class Card {
     private int id ;
     private Button button ;
-    private boolean matched = false ;
+    private boolean matched = false;
+    private Image frontSide;
 
     public Card(int id) {
         this.id = id;
         this.button = new Button("?");
         this.button.setMinSize(150,150);
+
+        String path = "/com/example/pexesooo/images/img" + id + ".png";
+        this.frontSide = new Image(getClass().getResourceAsStream(path));
+
     }
 
     public void flip () {
-        button.setText(String.valueOf(id)); ;
+        ImageView view = new ImageView(frontSide);
+        view.setFitWidth(80);
+        view.setFitHeight(80);
+        view.setPreserveRatio(true);
+
+        button.setGraphic(view);
+        button.setText("");
     }
 
 

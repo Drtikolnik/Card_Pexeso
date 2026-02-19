@@ -30,6 +30,10 @@ public class HelloController {
     private Label labelScore2;
     @FXML
     private Label labelKteryHracHraje;
+    @FXML
+    private Button buttonHratZnovu;
+
+
 
 
 
@@ -112,11 +116,20 @@ public class HelloController {
                 if(score1 > score2){
                     winnerPlayer = 1;
                     labelWinner.setText("Vyhrál hráč 1!");
+                    buttonHratZnovu.setVisible(true);
+                    buttonHratZnovu.setDisable(false);
+
                 } else if(score2 > score1) {
                     winnerPlayer = 2;
                     labelWinner.setText("Vyhrál hráč 2!");
+                    buttonHratZnovu.setVisible(true);
+                    buttonHratZnovu.setDisable(false);
+
                 }else{
                     labelWinner.setText("Remíza!");
+                    buttonHratZnovu.setVisible(true);
+                    buttonHratZnovu.setDisable(false);
+
                 }
             }else{
                 labelKteryHracHraje.setText("Hraje hráč " +currentPlayer);
@@ -124,7 +137,17 @@ public class HelloController {
 
         }
 
+    }
 
+    public void hratZnovu(){
+        buttonHratZnovu.setVisible(false);
+        buttonHratZnovu.setDisable(true);
+        cards.clear();
+        currentPlayer = 1;
+        winnerPlayer = 0;
+        score1 = 0;
+        score2 = 0;
+        initialize();
     }
 
     @FXML
