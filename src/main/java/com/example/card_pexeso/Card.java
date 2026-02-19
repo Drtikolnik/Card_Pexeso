@@ -22,37 +22,53 @@ public class Card {
     private int id ;
     private Button button ;
     private boolean matched = false;
-    private Image frontSide;
+    private final Image frontImage;
+    private final Image backImage;
 
     public Card(int id) {
         this.id = id;
-        this.button = new Button("?");
+        this.button = new Button(null);
         this.button.setMinSize(150,150);
+        this.frontImage = loadImage("/com/example/card_pexeso/imgs/"+id+".png");
+        this.backImage = loadImage("/com/example/card_pexeso/imgs/Terraria2.png");
+        button.setGraphic(imageView(backImage));
 
-        String path = "/com/example/pexesooo/images/img" + id + ".png";
-        this.frontSide = new Image(getClass().getResourceAsStream(path));
 
     }
 
     public void flip () {
-        ImageView view = new ImageView(frontSide);
-        view.setFitWidth(80);
-        view.setFitHeight(80);
-        view.setPreserveRatio(true);
-
-        button.setGraphic(view);
-        button.setText("");
+        button.setGraphic(imageView(frontImage));
+        button.setText(null);
     }
 
+    private Image loadImage(String path) {
+        var stream = getClass().getResourceAsStream(path);
+        if (stream == null){
+            throw new IllegalArgumentException("Can't load image from "+path);
+        }
+        return new Image(stream);
+    }
 
-    public void flipBack () {
-        // Vytvoříme pauzu na 1 sekundu
+    private ImageView imageView(Image image) {
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(120);
+        imageView.setFitWidth(120);
+        imageView.setPreserveRatio(true);
+        return imageView;
+    }
+
+    public void flipBack() {
+        // 1. Vytvoříme pauzu na 1 sekundu
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
 
-        // Co se má stát, až pauza skončí:
-        pause.setOnFinished(e -> button.setText("?"));
+        // 2. Co se stane po skončení pauzy
+        pause.setOnFinished(e -> {
+            // Místo otazníku nastavíme obrázek pozadí (Terraria.png)
+            button.setGraphic(imageView(backImage));
+            button.setText(null); // Pro jistotu smažeme případný text
+        });
 
-        // Spustíme odpočet
+        // 3. Spustíme
         pause.play();
     }
 
