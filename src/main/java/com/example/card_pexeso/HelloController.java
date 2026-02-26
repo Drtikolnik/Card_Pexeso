@@ -143,6 +143,8 @@ public class HelloController {
         buttonHratZnovu.setVisible(false);
         buttonHratZnovu.setDisable(true);
         cards.clear();
+        firstCard = null;
+        secondCard = null;
         currentPlayer = 1;
         winnerPlayer = 0;
         score1 = 0;
