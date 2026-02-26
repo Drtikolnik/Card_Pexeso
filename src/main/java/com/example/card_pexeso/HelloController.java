@@ -29,6 +29,16 @@ public class HelloController {
     @FXML
     private Label labelScore2;
     @FXML
+    private Label labelScore3;
+
+    @FXML
+    private Label labelTah1;
+    @FXML
+    private Label labelTah2;
+    @FXML
+    private Label labelTah3;
+
+    @FXML
     private Label labelKteryHracHraje;
     @FXML
     private Button buttonHratZnovu;
@@ -46,24 +56,29 @@ public class HelloController {
     private int winnerPlayer = 0;
     private int score1 = 0;
     private int score2 = 0;
+    private int score3 = 0;
+    private int tah1 = 0;
+    private int tah2 = 0;
+    private int tah3 = 0;
 
 
 
 
     @FXML
     public void generateCards() {
-        for(int i = 0; i < 8; i++) {
+        for(int i = 0; i < 12; i++) {
             cards.add(new Card(i));
             cards.add(new Card(i));
         }
+        cards.add(new Card(100));
     }
 
     @FXML
     public void displayCards() {
         int index = 0;
 
-        for(int row = 1; row < 5; row++){
-            for(int col = 0; col < 4; col++){
+        for(int row = 1; row < 6; row++){
+            for(int col = 0; col < 5; col++){
                 Card card = cards.get(index++);
                 Button btn = card.getButton();
                 btn.setOnAction( e -> handleCardClick(card));
@@ -82,66 +97,120 @@ public class HelloController {
             card.flip();
             checkMatch() ;
         }
+        chceckSpecial();
     }
 
+
+
     public void checkMatch() {
+        chceckSpecial();
         if(firstCard != secondCard) {
             if((firstCard.getId()) == (secondCard).getId()) {
                 if(currentPlayer == 1) {
                     score1++;
-                }else{
+                    tah1++;
+                }else if(currentPlayer == 2) {
                     score2++;
+                    tah2++;
+                }else{
+                    score3++;
+                    tah3++;
                 }
                 firstCard.getButton().setDisable(true);
                 secondCard.getButton().setDisable(true);
-                firstCard = null;
-                secondCard = null;
+
             }else{
                 if(currentPlayer == 1) {
+                    tah1++;
                     currentPlayer = 2;
+                }else if(currentPlayer == 2) {
+                    tah2++;
+                    currentPlayer = 3;
                 }else{
+                    tah3++;
                     currentPlayer = 1;
                 }
                 firstCard.flipBack();
                 secondCard.flipBack();
 
-                firstCard = null;
-                secondCard = null;
-
             }
 
-            labelScore1.setText(score1+"");
-            labelScore2.setText(score2+"");
-            if((score1+score2) == 8){
-                if(score1 > score2){
-                    winnerPlayer = 1;
-                    labelWinner.setText("Vyhrál hráč 1!");
-                    buttonHratZnovu.setVisible(true);
-                    buttonHratZnovu.setDisable(false);
-
-                } else if(score2 > score1) {
-                    winnerPlayer = 2;
-                    labelWinner.setText("Vyhrál hráč 2!");
-                    buttonHratZnovu.setVisible(true);
-                    buttonHratZnovu.setDisable(false);
-
-                }else{
-                    labelWinner.setText("Remíza!");
-                    buttonHratZnovu.setVisible(true);
-                    buttonHratZnovu.setDisable(false);
-
-                }
-            }else{
-                labelKteryHracHraje.setText("Hraje hráč " +currentPlayer);
-            }
+            firstCard = null;
+            secondCard = null;
+            updateScoreAndWinner();
+            updateTah();
 
         }
 
     }
+    public void chceckSpecial(){
+        if (firstCard.getId()==100) {
+            if(currentPlayer == 1) {
+                score1 = score1 + 3;
+            }else if(currentPlayer == 2) {
+                score2 =  score2 + 3;
+            }else{
+                score3 = score3 + 3;
+            }
+            firstCard.getButton().setDisable(true);
+            firstCard = null;
+
+        }else if(secondCard.getId()==100){
+            if(currentPlayer == 1) {
+                score1 = score1 + 3;
+            }else if(currentPlayer == 2) {
+                score2 =  score2 + 3;
+            }else{
+                score3 = score3 + 3;
+            }
+            secondCard.getButton().setDisable(true);
+            secondCard = null;
+        }
+        updateTah();
+        updateScoreAndWinner();
+
+    }
+
+    public void updateScoreAndWinner() {
+        labelScore1.setText(score1+"");
+        labelScore2.setText(score2+"");
+        labelScore3.setText(score3+"");
+        if((score1+score2+score3) == 8){
+            buttonHratZnovu.setText("HRÁT ZNOVU");
+            //buttonHratZnovu.setVisible(true);
+            //buttonHratZnovu.setDisable(false);
+            if(score1 > score2 && score1 > score3) {
+                winnerPlayer = 1;
+                labelWinner.setText("Vyhrál hráč 1!");
+
+            } else if(score2 > score1 && score2 > score3) {
+                winnerPlayer = 2;
+                labelWinner.setText("Vyhrál hráč 2!");
+
+            }else if(score3 > score1 && score3 > score2) {
+                winnerPlayer = 3;
+                labelWinner.setText("Vyhrál hráč 3!");
+
+            }else{
+                labelWinner.setText("Remíza!");
+
+            }
+        }else{
+            labelKteryHracHraje.setText("Hraje hráč " +currentPlayer);
+        }
+    }
+
+    public void updateTah(){
+        labelTah1.setText(tah1+"");
+        labelTah2.setText(tah2+"");
+        labelTah3.setText(tah3+"");
+        //tahy počítám v checkMatch
+    }
 
     public void hratZnovu(){
-        buttonHratZnovu.setVisible(false);
-        buttonHratZnovu.setDisable(true);
+        //buttonHratZnovu.setVisible(false);
+        //buttonHratZnovu.setDisable(true);
+        buttonHratZnovu.setText("RESTART");
         cards.clear();
         firstCard = null;
         secondCard = null;
@@ -149,6 +218,15 @@ public class HelloController {
         winnerPlayer = 0;
         score1 = 0;
         score2 = 0;
+        score3 = 0;
+        tah1 = 0;
+        tah2 = 0;
+        tah3 = 0;
+        updateTah();
+        labelScore1.setText(score1+"");
+        labelScore2.setText(score2+"");
+        labelScore3.setText(score3+"");
+        labelWinner.setText("");
         initialize();
     }
 

@@ -21,7 +21,7 @@
 }
 
 /* Speciální styl pro skóre (trošku jiná barva) */
-#labelScore1, #labelScore2 {
+#labelScore1, #labelScore2, #labelScore3 {
     -fx-text-fill: #0f3460;
     -fx-background-color: #e94560;
     -fx-background-radius: 5;
